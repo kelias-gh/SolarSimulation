@@ -1,20 +1,21 @@
 #include "Texture2D.h"
+#define STB_IMAGE_IMPLEMENTATION    
+#include "stb_image.h"
 
-/*void loadTexture()
-{
+Texture2D LoadTexture(const char* filePath) {
+    Texture2D tex;
+
     int ImageWidth;
     int ImageHeight;
     int ImageChannels;
     int ImageDesiredChannels = 4;
 
-    unsigned char* ImageData = stbi_load("earth.jpg",
+    unsigned char* ImageData = stbi_load(filePath,
         &ImageWidth,
         &ImageHeight,
         &ImageChannels, ImageDesiredChannels);
 
-    int ImagePitch = ImageWidth * sizeof(unsigned char) * 4;
-
-    // Texture
+    int ImagePitch = ImageWidth * 4;
 
     D3D11_TEXTURE2D_DESC ImageTextureDesc = {};
 
@@ -33,6 +34,9 @@
     ImageSubresourceData.pSysMem = ImageData;
     ImageSubresourceData.SysMemPitch = ImagePitch;
 
+    tex.ImageHeight = ImageTextureDesc.Height;
+    tex.ImageWidth = ImageTextureDesc.Width;
+
     ID3D11Texture2D* ImageTexture;
 
     GetDevice()->CreateTexture2D(&ImageTextureDesc,
@@ -40,18 +44,12 @@
         &ImageTexture
     );
 
-    stbi_image_free(ImageData);
-
-    // Shader resource view
-
-    ID3D11ShaderResourceView* ImageShaderResourceView;
+    free(ImageData);
 
     GetDevice()->CreateShaderResourceView(ImageTexture,
         nullptr,
-        &ImageShaderResourceView
+        &tex.ImageShaderResourceView
     );
-
-    // Sampler
 
     D3D11_SAMPLER_DESC ImageSamplerDesc = {};
 
@@ -69,11 +67,8 @@
     ImageSamplerDesc.MinLOD = -FLT_MAX;
     ImageSamplerDesc.MaxLOD = FLT_MAX;
 
-    ID3D11SamplerState* ImageSamplerState;
-
     GetDevice()->CreateSamplerState(&ImageSamplerDesc,
-        &ImageSamplerState);
+        &tex.ImageSamplerState);
 
-    GetDeviceContext()->PSSetShaderResources(0, 1, &ImageShaderResourceView);
-    GetDeviceContext()->PSSetSamplers(0, 1, &ImageSamplerState);
-}*/
+    return tex;
+}

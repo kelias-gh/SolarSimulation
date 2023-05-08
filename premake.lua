@@ -1,8 +1,8 @@
-workspace "PuzzleGame"
+workspace "SolarSimulation"
 	  architecture "x64"
 	  configurations{"Debug", "Release"}
 
-	project "PuzzleGame"
+	project "SolarSimulation"
 	location "build"
 	kind "WindowedApp"
 	language "C++"

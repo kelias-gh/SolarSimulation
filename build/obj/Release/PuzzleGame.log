@@ -1,6 +1,0 @@
-﻿  ModelLoader.cpp
-C:\PuzzleGame\libs\math\AOMMath.h(117,25): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\PuzzleGame\libs\math\AOMMathMatrices.inl(168,59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\PuzzleGame\libs\math\AOMMathMatrices.inl(169,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\PuzzleGame\src\ModelLoader.cpp(69,24): warning C4018: '<': signed/unsigned mismatch
-  PuzzleGame.vcxproj -> C:\PuzzleGame\build\bin\Release\PuzzleGame.exe

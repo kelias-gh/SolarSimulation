@@ -41,5 +41,5 @@ float4 main(Output input) : SV_TARGET{
 	float3 Reflect = normalize(2 * diff * input.normal - light.dir);
 	float4 specular = pow(saturate(dot(Reflect, view)), 4); // R.V^n
 
-	return ObjTexture.Sample(ObjSamplerState, input.texCoord);//material.ambient + light.diffuse * diff + specular;
+	return ObjTexture.Sample(ObjSamplerState, input.texCoord); //* (material.ambient + light.diffuse * diff + specular);
 }

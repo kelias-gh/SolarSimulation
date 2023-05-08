@@ -11,19 +11,6 @@ void Transform::calculateVectors() {
 
 	up = Math::CrossProduct(forward, right);
 	up = Math::normalize(up);
-
-	worldMatrix =
-		Math::Translation(position.x,
-			position.y,
-			position.z)
-
-		* Math::RotationRollPitchYaw(rotation.x,
-			rotation.y,
-			rotation.z)
-
-		* Math::Scaling(scale.x,
-			scale.y,
-			scale.z);
 }
 
 void Transform::LookAt(Math::Vector3 lookAtPos)

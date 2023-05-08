@@ -11,7 +11,13 @@ struct Vertex
 
 struct Mesh {
 	std::vector<Vertex> vertices;
-	std::vector<uint32_t> indices;
+	std::vector<unsigned int> indices;
 
 	void RecalculateNormals();
 };
+
+void DrawCircle(float radius, int points, Mesh& const mesh);
+
+//https://www.artstation.com/blogs/briz/oKpM/perfectly-remapping-a-cube-to-a-sphere-houdini
+
+void DrawSphere(int radius, int longitudePoints, int latitudePoints, Mesh& const mesh);

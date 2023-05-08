@@ -1,7 +1,14 @@
-/*#pragma once
+#pragma once
 #include "d3d11_renderer.h"
 #include <d3d11.h>
-#define STB_IMAGE_IMPLEMENTATION    
 #include "stb_image.h"
 
-void loadTexture();*/
+struct Texture2D {
+    int ImageWidth;
+    int ImageHeight;
+
+    ID3D11ShaderResourceView* ImageShaderResourceView;
+    ID3D11SamplerState* ImageSamplerState;
+};
+
+Texture2D LoadTexture(const char* filePath);
