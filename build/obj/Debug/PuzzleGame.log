@@ -1,0 +1,15 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (obj\Debug\) contains files shared from another project (aaaaa.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  DrawPlayer.cpp
+C:\PGame\libs\math\AOMMath.h(122,25): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\PGame\libs\math\AOMMathMatrices.inl(168,59): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\PGame\libs\math\AOMMathMatrices.inl(169,33): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\PGame\src\ModelLoader.h(14,39): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\PGame\src\DrawPlayer.cpp(144,59): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\PGame\src\DrawPlayer.cpp(171,86): warning C4227: anachronism used: qualifiers on reference are ignored
+C:\PGame\src\DrawPlayer.cpp(177,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\PGame\src\DrawPlayer.cpp(180,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\PGame\src\DrawPlayer.cpp(240,56): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\PGame\src\DrawPlayer.cpp(241,63): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+C:\PGame\src\DrawPlayer.cpp(244,53): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\PGame\src\DrawPlayer.cpp(245,63): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  PuzzleGame.vcxproj -> C:\PGame\build\bin\Debug\PuzzleGame.exe
