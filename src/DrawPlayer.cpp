@@ -30,7 +30,7 @@ struct Planet {
     MatrixBuffer shaderMatrices;
     Material mainMaterial;
     Matrix4x4 worldMatrix;
-}Venus, Earth;
+}Earth, Venus;
 Camera camera;
 
 float pitch = 0;
@@ -181,7 +181,11 @@ void UpdatePlayerCharacter(float dt, Math::Vector3* mouseInput) {
 
     FreeCam(dt, mouseInput);
 
-    Earth.transform.position = Vector3(50.0f, 0.0f, 0.0f);
+    static float angle = 0.0f;
+    angle += 0.006f * dt * 500;
+    float x = 90.0f * std::cos(angle * PI / 180.0f);
+    float z = 90.0f * std::sin(angle * PI / 180.0f);
+    Earth.transform.position = Vector3(x, 0.0f, z);
 }
 
 void DeconstructPlayerCharacter() {

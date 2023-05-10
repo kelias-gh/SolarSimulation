@@ -11,4 +11,6 @@ C:\SolarSimulation\src\DrawPlayer.cpp(112,77): warning C4267: "=": Konvertierung
 C:\SolarSimulation\src\DrawPlayer.cpp(115,67): warning C4267: "=": Konvertierung von "size_t" nach "uint32_t", Datenverlust möglich
 C:\SolarSimulation\src\DrawPlayer.cpp(116,77): warning C4267: "=": Konvertierung von "size_t" nach "UINT", Datenverlust möglich
 C:\SolarSimulation\src\DrawPlayer.cpp(127,39): warning C4227: Anachronismus verwendet: Qualifizierer auf Verweise werden ignoriert
+C:\SolarSimulation\src\DrawPlayer.cpp(186,13): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\SolarSimulation\src\DrawPlayer.cpp(187,13): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
   SolarSimulation.vcxproj -> C:\SolarSimulation\build\bin\Debug\SolarSimulation.exe
