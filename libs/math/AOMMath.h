@@ -32,6 +32,7 @@ namespace Math {
 			Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 
 			const inline float magnitude();
+			const inline float sqrMagnitude();
 
 			inline Vector3 operator = (Vector3 const& Vector);
 			inline Vector3 operator * (Vector3 const& Vector);

@@ -147,6 +147,11 @@ namespace Math {
 			return sqrt(x * x + y * y + z * z);
 		}
 
+		inline const float Vector3::sqrMagnitude()
+		{
+			return x * x + y * y + z * z;
+		}
+
 		Vector3 normalize(Vector3 vector) {
 			if (vector.magnitude() == 0)
 			{

@@ -10,18 +10,22 @@ using namespace Math;
 #define PSPath L"../src/PixelShader.hlsl"
 #endif // DEBUG
 
+#define GRAV_CONSTANT 6.6743e-11
+
+#define NUM_BODIES 9
+
 struct Material
 {
     Math::Vector4 ambient;
     Math::Vector4 diffuse;
 
     Texture2D mainTexture;
-};
-
-struct Planet {
-    Mesh mesh;
     Shader vertexShader;
     Shader pixelShader;
+};
+
+struct Body {
+    Mesh mesh;
     Buffer* indexBuffer;
     VertexBuffer* vertexBuffer;
     ConstantBuffer* constantBuffer;
@@ -30,13 +34,52 @@ struct Planet {
     MatrixBuffer shaderMatrices;
     Material mainMaterial;
     Matrix4x4 worldMatrix;
-}Earth, Venus;
+
+    float mass;
+}Bodies[NUM_BODIES];
 Camera camera;
 
+Material mainMaterial;
 float pitch = 0;
 float yaw = 0;
 
 float speed = 20.0f;
+
+Vector3 CalculateOrbit(Vector3 bodyA, Vector3 bodyB, float mass) {
+    Vector3 accel;
+    /*The Gravitational force is given by
+        F = (G * M * m) / r²
+        where
+        G - gravitational constant
+        M - mass of the sun(in this case)
+        r - mean distance between the objects
+        as we know the force needed to change the motion of an object of mass 'm' is
+
+        F = ma
+
+        Equating them gives
+
+        Acceleration a = (G * M) / r²*/
+    float distance = Vector3(bodyA - bodyB).sqrMagnitude();
+    Vector3 direction = normalize(Vector3(bodyA - bodyB));
+
+    accel = (direction * GRAV_CONSTANT * mass) / distance;
+
+
+    return accel;
+}
+
+const char* bodyTextures[NUM_BODIES] = {
+    "../src/sun.jpg",
+    "../src/mercury.jpg",
+    "../src/venus.jpg",
+    "../src/earth.jpg",
+    "../src/mars.jpg",
+    "../src/jupiter.jpg",
+    "../src/saturn.jpg",
+    "../src/uranus.jpg",
+    "../src/neptune.jpg",
+};
 
 void FreeCam(float dt, Vector3* mouseInput) {
     float sens = 0.1f;
@@ -95,7 +138,7 @@ void FreeCam(float dt, Vector3* mouseInput) {
     camera.transform.rotation = Math::Vector3(Math::radians(pitch), Math::radians(yaw), 0);
 }
 
-void InitializePlanet(Planet& const planet) {
+void InitializePlanet(Body& const planet) {
     planet.constantBuffer = new ConstantBuffer;
     planet.MaterialBuffer = new ConstantBuffer;
     planet.vertexBuffer = new VertexBuffer;
@@ -119,12 +162,9 @@ void InitializePlanet(Planet& const planet) {
     planet.indexBuffer->Create();
     planet.constantBuffer->Create();
     planet.MaterialBuffer->Create();
-
-    planet.vertexShader.create(VSPath, "main", "vs_5_0");
-    planet.pixelShader.create(PSPath, "main", "ps_5_0");
 }
 
-void UpdatePlanet(Planet& const planet) {
+void UpdatePlanet(Body& const planet) {
     planet.transform.calculateVectors();
 
     planet.shaderMatrices.world =
@@ -159,15 +199,18 @@ void UpdatePlanet(Planet& const planet) {
 }
 
 void InitializePlayerCharacter() {
-    DrawSphere(20, 72, 72, Venus.mesh);
-    DrawSphere(20, 72, 72, Earth.mesh);
+    mainMaterial.pixelShader.create(PSPath, "main", "ps_5_0");
+    mainMaterial.vertexShader.create(VSPath, "main", "vs_5_0");
+
+    for (int i = 0; i < sizeof(Bodies) / sizeof(Body); i++)
+    {
+        Bodies[i].mainMaterial = mainMaterial;
+        DrawSphere(20, 72, 72, Bodies[i].mesh);
+        Bodies[i].mainMaterial.mainTexture = LoadTexture(bodyTextures[i]);
+        InitializePlanet(Bodies[i]);
+    }
     //https://www.solarsystemscope.com/textures/
 
-    Venus.mainMaterial.mainTexture = LoadTexture("../src/venus.jpg");
-    Earth.mainMaterial.mainTexture = LoadTexture("../src/earth.jpg");
-
-    InitializePlanet(Earth);
-    InitializePlanet(Venus);
 
     camera.createProjection(70.0f, 800, 800, 3.0f, 5000.0f);
 }
@@ -176,26 +219,37 @@ void UpdatePlayerCharacter(float dt, Math::Vector3* mouseInput) {
     camera.transform.calculateVectors();
     camera.Draw();
 
-    UpdatePlanet(Venus);
-    UpdatePlanet(Earth);
+    for (int i = 0; i < sizeof(Bodies) / sizeof(Body); i++)
+    {
+        UpdatePlanet(Bodies[i]);
+    }
 
     FreeCam(dt, mouseInput);
 
     static float angle = 0.0f;
-    angle += 0.006f * dt * 500;
-    float x = 90.0f * std::cos(angle * PI / 180.0f);
-    float z = 90.0f * std::sin(angle * PI / 180.0f);
-    Earth.transform.position = Vector3(x, 0.0f, z);
+            angle += 0.1f * dt * 10.0f;
+             float x = 90.0f * std::cos(radians(angle));
+    float z = 90.0f * std::sin(radians(angle));
+    for (int i = 0; i < sizeof(Bodies) / sizeof(Body); i++)
+    {
+        Bodies[i].transform.position = Vector3(x, 0.0f, z) * i;
+    }
+    
+    Bodies[1].transform.position = Vector3(200.0f, 20.0f, 20.0f);
+    Bodies[1].transform.position = CalculateOrbit(Bodies[1].transform.position, Bodies[0], 10);
+
+    //for (int i = 0; i < sizeof(Bodies) / sizeof(Body); i++)
+    //{
+    //    Bodies[i].transform.position = Vector3(x, 0.0f, z) * i;
+    //}
 }
 
 void DeconstructPlayerCharacter() {
-    delete(Venus.constantBuffer);
-    delete(Venus.indexBuffer);
-    delete(Venus.vertexBuffer);
-    delete(Venus.MaterialBuffer);
-
-    delete(Earth.constantBuffer);
-    delete(Earth.indexBuffer);
-    delete(Earth.vertexBuffer);
-    delete(Earth.MaterialBuffer);
+    for (int i = 0; i < sizeof(Bodies) / sizeof(Body); i++)
+    {
+        delete(Bodies[i].constantBuffer);
+        delete(Bodies[i].indexBuffer);
+        delete(Bodies[i].vertexBuffer);
+        delete(Bodies[i].MaterialBuffer);
+    }
 }
