@@ -28,7 +28,51 @@ void DrawCircle(float radius, int points, Mesh& const mesh) {
     mesh.indices.push_back(points - 1);
 }
 
-void DrawSphere(int radius, int longitudePoints, int latitudePoints, Mesh& const mesh) {
+void Mesh::CreateMesh() {
+    vertexBuffer = new VertexBuffer;
+    indexBuffer = new Buffer;
+
+    vertexBuffer->data = &vertices[0];
+    vertexBuffer->verticesAmount = vertices.size();
+    vertexBuffer->size = vertices.size() * sizeof(Vertex);
+
+    indexBuffer->data = &indices[0];
+    indexBuffer->indicesAmount = indices.size();
+    indexBuffer->size = indices.size() * sizeof(unsigned int);
+
+    vertexBuffer->Create();
+    indexBuffer->Create();
+}
+
+void Mesh::Update() {
+    GetDeviceContext()->DrawIndexed(indexBuffer->indicesAmount, 0, 0);
+}
+
+Mesh::~Mesh() {
+    delete(vertexBuffer);
+    delete(indexBuffer);
+}
+
+void Material::CreateMaterial() {
+    MaterialBuffer = new ConstantBuffer;
+
+    MaterialBuffer->data = this;
+    MaterialBuffer->size = sizeof(Material);
+    MaterialBuffer->Create();
+}
+
+void Material::Update() {
+    MaterialBuffer->Update();
+
+    GetDeviceContext()->PSSetShaderResources(0, 1, &mainTexture.ImageShaderResourceView);
+    GetDeviceContext()->PSSetSamplers(0, 1, &mainTexture.ImageSamplerState);
+    GetDeviceContext()->PSSetConstantBuffers(1, 1, &MaterialBuffer->buffer);
+}
+
+/*void DrawSphere(int radius, int longitudePoints, int latitudePoints, Mesh& const mesh) {
+    mesh.vertices.clear();
+    mesh.indices.clear();
+
     float longitudeAngle = 0;
     float latitudeAngle = 0;
 
@@ -71,4 +115,4 @@ void DrawSphere(int radius, int longitudePoints, int latitudePoints, Mesh& const
             mesh.indices.push_back(p3);
         }
     }
-}
+}*/

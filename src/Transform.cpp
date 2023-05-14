@@ -1,5 +1,17 @@
 #include "Transform.h"
 
+void Transform::CreateTransform() {
+	transformCBuffer = new ConstantBuffer;
+
+	transformCBuffer->data = &worldMatrix;
+	transformCBuffer->size = sizeof(Math::Matrix4x4);
+
+	transformCBuffer->Create();
+}
+
+Transform::~Transform() {
+}
+
 void Transform::calculateVectors() {
 	forward.x = cos(rotation.x) * sin(rotation.y);
 	forward.y = -sin(rotation.x);
@@ -48,4 +60,25 @@ void Transform::LookAt(Math::Vector3 lookAtPos)
 	}
 
 	rotation = Math::Vector3(pitch, yaw, rotation.z);
+}
+
+void Transform::Update() {
+	worldMatrix =
+		Math::Translation(position.x,
+			position.y,
+			position.z)
+
+		* Math::RotationRollPitchYaw(rotation.x,
+			rotation.y,
+			rotation.z)
+
+		* Math::Scaling(scale.x,
+			scale.y,
+			scale.z);
+
+	worldMatrix = Math::Transpose(worldMatrix);
+
+	calculateVectors();
+	transformCBuffer->Update();
+	GetDeviceContext()->VSSetConstantBuffers(0, 1, &transformCBuffer->buffer);
 }

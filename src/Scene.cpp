@@ -13,7 +13,7 @@ void CreateScene(HWND hwnd) {
 
     fpstimer.Start();
 
-    InitializePlayerCharacter();
+    Start();
 }
 float dt;
 void UpdateScene() {
@@ -36,12 +36,12 @@ void UpdateScene() {
 
     ImGui::Text(fpsString.c_str());
 
-    UpdatePlayerCharacter(dt, mouseInput);
+    Update(dt, mouseInput);
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
 void DestroyScene() {
-    DeconstructPlayerCharacter();
+    Deconstruct();
 }

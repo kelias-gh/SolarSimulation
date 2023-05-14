@@ -1,5 +1,6 @@
 #pragma once
 
+#include "d3d11_renderer.h"
 #include <string>
 #include "AOMMath.h"
 
@@ -20,6 +21,15 @@ struct Transform {
 	Math::Vector3  defaultDown =		{0, -1, 0};
 	Math::Vector3  defaultForward =	{0, 0, 1};
 	Math::Vector3  defaultBackward =	{0, 0, -1};
+
+	ConstantBuffer* transformCBuffer;
+
+	Math::Matrix4x4 worldMatrix;
+
+	void CreateTransform();
+	~Transform();
+
+	void Update();
 
 	void calculateVectors();
 	void LookAt(Math::Vector3 lookAtPos);

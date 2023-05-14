@@ -1,6 +1,9 @@
 cbuffer MatrixBuffer : register(b0) {
-	matrix mat;
-	matrix matWorld;
+	matrix worldMatrix;
+};
+
+cbuffer MatrixBuffer : register(b1) {
+	matrix ViewAndProjectionMatrix;
 };
 
 struct Input {
@@ -20,10 +23,10 @@ Output main(Input input)
 {
 	Output output;
 
-	output.worldPos = normalize(mul(input.position, matWorld));
-	output.position = mul(float4(input.position, 1.0f), mat);
+	output.worldPos = normalize(mul(input.position, worldMatrix));
+	output.position = mul(mul(float4(input.position, 1.0f), worldMatrix), ViewAndProjectionMatrix);
 	output.texCoord = input.inTexCoord;
-	output.normal = normalize(mul(input.normal, matWorld));
+	output.normal = normalize(mul(input.normal, worldMatrix));
 
 	return output;
 }

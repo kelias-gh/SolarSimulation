@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera.h"
+#include "Sphere.h"
 #include "d3d11_renderer.h"
 #include "AOMMath.h"
 #include "ModelLoader.h"
@@ -11,8 +12,8 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
-void InitializePlayerCharacter();
+void Start();
 
-void UpdatePlayerCharacter(float dt, Math::Vector3* mouseInput);
+void Update(float dt, Math::Vector3* mouseInput);
 
-void DeconstructPlayerCharacter();
+void Deconstruct();

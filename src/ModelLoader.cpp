@@ -1,6 +1,6 @@
 #include "ModelLoader.h"
 
-bool ModelLoader::loadOBJModel(Mesh & const mesh, std::string filepath) {
+bool loadOBJModel(Mesh & const mesh, std::string filepath) {
     std::ifstream file(filepath);
     std::vector<int> tokens;
     std::vector<uint32_t> indices;

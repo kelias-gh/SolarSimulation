@@ -1,6 +1,7 @@
 #include "Texture2D.h"
 #define STB_IMAGE_IMPLEMENTATION    
 #include "stb_image.h"
+#include "d3d11_renderer.h"
 
 Texture2D LoadTexture(const char* filePath) {
     Texture2D tex;

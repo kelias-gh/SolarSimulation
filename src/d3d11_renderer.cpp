@@ -1,4 +1,5 @@
 #include "d3d11_renderer.h"
+#include "Mesh.h"
 
 #define HRCheck(hr, error_message, error_type) \
 	do { \
@@ -191,7 +192,7 @@ void EndFrame() {
 	swapChain->Present(0, 0);
 }
 
-void WindowResizeBuffers(int newWindowWidth, int newWindowHeight){
+void WindowResizeBuffers(int newWindowWidth, int newWindowHeight) {
 
 }
 
@@ -273,7 +274,7 @@ HRESULT Shader::create(LPCWSTR srcFile, LPCSTR entryPoint, LPCSTR target) {
 
 	D3D11_SHADER_DESC shaderDesc;
 	shaderReflection->GetDesc(&shaderDesc);
-	
+
 	if (shaderDesc.OutputParameters == 4)
 	{
 		//Vertex Shader

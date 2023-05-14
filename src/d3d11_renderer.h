@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 #include <d3dcompiler.h>
-#include "Mesh.h"
 #include <d3d11shader.h>
 
 //Initialize DirectX11
@@ -19,7 +18,7 @@ void WindowResizeBuffers(int newWindowWidth, int newWindowHeight);
 
 struct Shader {
 	HRESULT create(LPCWSTR srcFile, LPCSTR entryPoint, LPCSTR target);
-	union 
+	union
 	{
 		ID3D11PixelShader* pixelShader;
 		ID3D11VertexShader* vertexShader;

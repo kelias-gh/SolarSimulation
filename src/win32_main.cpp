@@ -34,14 +34,14 @@ WinMain(HINSTANCE hInstance,
     WindowClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
     WindowClass.lpfnWndProc = WindowProc;
     WindowClass.hInstance = hInstance;
-    WindowClass.lpszClassName = L"PuzzleGame";
+    WindowClass.lpszClassName = L"Solar System Simulation";
     WindowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 
     if (RegisterClass(&WindowClass)) {
         HWND WindowHandle = CreateWindowEx(
             0,
             WindowClass.lpszClassName,
-            L"Puzzle Game",
+            L"Solar System",
             WS_OVERLAPPEDWINDOW | WS_VISIBLE,
             CW_USEDEFAULT,
             CW_USEDEFAULT,
