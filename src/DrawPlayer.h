@@ -12,8 +12,14 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
+struct Entity {
+	Transform* transform;
+	Mesh* mesh;
+	Material* material;
+
+	~Entity();
+};
+
 void Start();
 
 void Update(float dt, Math::Vector3* mouseInput);
-
-void Deconstruct();
